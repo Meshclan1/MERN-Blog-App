@@ -5,6 +5,7 @@ const User = require("./models/schemas/User");
 const bcrypt = require("bcrypt");
 const app = express();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 const mongoDbConnection = process.env.SECRET_KEY;
@@ -16,6 +17,7 @@ const secret = secretName;
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect(mongoDbConnection);
 
@@ -45,6 +47,18 @@ app.post("/login", async (req, res) => {
   } else {
     res.status(400).json("wrong credentials");
   }
+});
+
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, secret, {}, (err, info) => {
+    if (err) throw err;
+    res.json(req.cookies);
+  });
+});
+
+app.post("/logout", (req, res) => {
+  res.cookie("token", "").json("ok");
 });
 
 app.listen(4000);
