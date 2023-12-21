@@ -8,10 +8,11 @@ const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 const mongoDbConnection = process.env.SECRET_KEY;
+const secretName = process.env.SECRET;
 
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
-const secret = "lorem";
+const secret = secretName;
 
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
