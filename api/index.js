@@ -6,6 +6,9 @@ const bcrypt = require("bcrypt");
 const app = express();
 const jwt = require("jsonwebtoken");
 
+require("dotenv").config();
+const mongoDbConnection = process.env.SECRET_KEY;
+
 const saltRounds = 10;
 const salt = bcrypt.genSaltSync(saltRounds);
 const secret = "lorem";
@@ -13,9 +16,7 @@ const secret = "lorem";
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json());
 
-mongoose.connect(
-  "mongodb+srv://Blog:mSx4zLzNo2dpwo7f@cluster0.rg9iwkj.mongodb.net/?retryWrites=true&w=majority"
-);
+mongoose.connect(mongoDbConnection);
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
