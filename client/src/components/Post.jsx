@@ -1,4 +1,13 @@
-export default function Post() {
+import { formatISO9075 } from "date-fns";
+
+export default function Post({
+  title,
+  summary,
+  cover,
+  content,
+  createdAt,
+  author,
+}) {
   return (
     <div className="post">
       <div className="image">
@@ -8,17 +17,12 @@ export default function Post() {
         ></img>
       </div>
       <div className="texts">
-        <h2>Brazil Trip Idea</h2>
+        <h2>{title}</h2>
         <p className="info">
-          <a className="author">Ayo M.</a>
-          <time>2023-11-23 13:59</time>
+          <a className="author">{author.username}</a>
+          <time>{formatISO9075(new Date(createdAt))}</time>
         </p>
-        <p className="summary">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
-          numquam illum quasi ad asperiores, laboriosam sapiente praesentium?
-          Harum debitis ea voluptas eveniet inventore sapiente animi, excepturi
-          illo consectetur quod natus!
-        </p>
+        <p className="summary">{summary}</p>
       </div>
     </div>
   );
