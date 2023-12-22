@@ -4,7 +4,7 @@ import Layout from "./components/Layout";
 import { Routes, Route } from "react-router-dom";
 import IndexPage from "./components/pages/IndexPage";
 import LoginPage from "./components/pages/LoginPage";
-import RegisterPage from "./components/pages/registerPage";
+import RegisterPage from "./components/pages/RegisterPage";
 import CreatePost from "./components/pages/CreatePost";
 import { UserContextProvider } from "./components/userContext";
 
