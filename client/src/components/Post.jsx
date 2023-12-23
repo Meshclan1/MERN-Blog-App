@@ -11,10 +11,7 @@ export default function Post({
   return (
     <div className="post">
       <div className="image">
-        <img
-          src="https://lp-cms-production.imgix.net/2023-08/-CantoiStock-975466162-RFC.jpg"
-          alt="Brazil"
-        ></img>
+        <img src={"http://localhost:4000/" + cover} alt="Brazil"></img>
       </div>
       <div className="texts">
         <h2>{title}</h2>
