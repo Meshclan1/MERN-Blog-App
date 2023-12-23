@@ -1,38 +1,47 @@
-import { useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import Editor from "../Editor";
 
-export default function CreatePost() {
+export default function EditPost() {
+  const { id } = useParams();
+
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState(false);
 
-  async function createNewPost(e) {
+  useEffect(() => {
+    fetch("http://localhost:4000/post/" + id).then((res) => {
+      res.json().then((postInfo) => {
+        setTitle(postInfo.title);
+        setContent(postInfo.content);
+        setSummary(postInfo.summary);
+      });
+    });
+  }, []);
+
+  async function updatePost(e) {
+    e.preventDefault();
     const data = new FormData();
     data.set("title", title);
     data.set("summary", summary);
     data.set("content", content);
-    data.set("file", files[0]);
-    e.preventDefault();
-    const res = await fetch("http://localhost:4000/post", {
-      method: "POST",
-      body: data,
-      credentials: "include",
-    });
-    if (res.ok) {
-      setRedirect(true);
+    if (files?.[0]) {
+      data.set("file", files?.[0]);
     }
+    await fetch("http://localhost:4000/post", {
+      method: "PUT",
+      body: data,
+    });
+    setRedirect(true);
   }
 
   if (redirect) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/post/" + id} />;
   }
   return (
-    <form onSubmit={createNewPost}>
+    <form onSubmit={updatePost}>
       <input
         type="title"
         placeholder={"Title"}
@@ -47,7 +56,7 @@ export default function CreatePost() {
       ></input>
       <input type="file" onChange={(e) => setFiles(e.target.files)}></input>
       <Editor onChange={setContent} value={content} />
-      <button style={{ marginTop: "5px" }}>Create Post</button>
+      <button style={{ marginTop: "5px" }}>Edit Post</button>
     </form>
   );
 }
