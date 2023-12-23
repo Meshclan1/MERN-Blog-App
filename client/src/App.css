@@ -156,9 +156,15 @@ div.edit-row {
 
 div.post-page a.edit-btn {
   background-color: #333;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   color: #fff;
   padding: 15px 30px;
   border-radius: 5px;
   text-decoration: none;
+}
+
+a svg {
+  height: 20px;
 }
