@@ -74,6 +74,7 @@ app.post("/post", uploadMiddleware.single("file"), async (req, res) => {
   const extension = parts[parts.length - 1];
   const newPath = path + "." + extension;
   fs.renameSync(path, newPath);
+
   const { token } = req.cookies;
   jwt.verify(token, secret, {}, async (err, info) => {
     if (err) throw err;

@@ -8,8 +8,8 @@ export default function Header() {
   useEffect(() => {
     fetch("http://localhost:4000/profile", {
       credentials: "include",
-    }).then((response) => {
-      response.json().then((userInfo) => {
+    }).then((res) => {
+      res.json().then((userInfo) => {
         setUserInfo(userInfo);
       });
     });
