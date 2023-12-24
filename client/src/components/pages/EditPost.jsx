@@ -27,14 +27,18 @@ export default function EditPost() {
     data.set("title", title);
     data.set("summary", summary);
     data.set("content", content);
+    data.set("id", id);
     if (files?.[0]) {
       data.set("file", files?.[0]);
     }
-    await fetch("http://localhost:4000/post", {
+    const res = await fetch("http://localhost:4000/post", {
       method: "PUT",
       body: data,
+      credentials: "include",
     });
-    setRedirect(true);
+    if (res.ok) {
+      setRedirect(true);
+    }
   }
 
   if (redirect) {
@@ -56,7 +60,7 @@ export default function EditPost() {
       ></input>
       <input type="file" onChange={(e) => setFiles(e.target.files)}></input>
       <Editor onChange={setContent} value={content} />
-      <button style={{ marginTop: "5px" }}>Edit Post</button>
+      <button style={{ marginTop: "5px" }}>Update Post</button>
     </form>
   );
 }
